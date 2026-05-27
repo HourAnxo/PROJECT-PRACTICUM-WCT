@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login / Register — QuickDelivery</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- Brand -->
+  <div class="brand">
+    <div class="brand-logo">Quick<span>Delivery</span></div>
+    <div class="brand-tagline">Fast. Reliable. Delivered to your door.</div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" id="tabLogin" onclick="switchTab('login')">Login</button>
+    <button class="tab" id="tabRegister" onclick="switchTab('register')">Register</button>
+  </div>
+
+  <!-- LOGIN PANEL -->
+  <div class="panel active" id="panelLogin">
+
+    <h2 class="panel-title">Welcome back 👋</h2>
+    <p class="panel-sub">Enter your credentials to access your account.</p>
+
+    <div class="alert alert-error" id="loginError"></div>
+    <div class="alert alert-success" id="loginSuccess"></div>
+
+    <div class="form-group">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" placeholder="you@example.com" />
+      <div class="field-error" id="loginEmailErr">Please enter a valid email.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="loginPassword">Password</label>
+      <div class="input-wrap">
+        <input type="password" id="loginPassword" placeholder="Your password" />
+        <button type="button" class="toggle-pw" onclick="togglePw('loginPassword', this)">👁</button>
+      </div>
+      <div class="field-error" id="loginPasswordErr">Password is required.</div>
+    </div>
+
+    <button class="btn-submit" id="loginBtn" onclick="handleLogin()">
+      <span id="loginBtnText">Login</span>
+      <div class="spinner" id="loginSpinner"></div>
+    </button>
+
+    <div class="switch-link">
+      Don't have an account?
+      <button type="button" onclick="switchTab('register')">Create one</button>
+    </div>
+
+    <a class="back-link" href="Food_System.Html">← Back to Shop</a>
+  </div>
+
+  <!-- REGISTER PANEL -->
+  <div class="panel" id="panelRegister">
+
+    <h2 class="panel-title">Create account ✨</h2>
+    <p class="panel-sub">Join QuickDelivery — it's free and takes 30 seconds.</p>
+
+    <div class="alert alert-error" id="regError"></div>
+    <div class="alert alert-success" id="regSuccess"></div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="regFirst">First Name</label>
+        <input type="text" id="regFirst" placeholder="John" />
+        <div class="field-error" id="regFirstErr">Required.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="regLast">Last Name</label>
+        <input type="text" id="regLast" placeholder="Doe" />
+        <div class="field-error" id="regLastErr">Required.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="regEmail">Email</label>
+      <input type="email" id="regEmail" placeholder="you@example.com" />
+      <div class="field-error" id="regEmailErr">Enter a valid email.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="regPassword">Password</label>
+      <div class="input-wrap">
+        <input type="password" id="regPassword" placeholder="Min 6 characters"
+               oninput="checkStrength(this.value)" />
+        <button type="button" class="toggle-pw" onclick="togglePw('regPassword', this)">👁</button>
+      </div>
+
+      <div class="strength-bar">
+        <div class="strength-fill" id="strengthFill"></div>
+      </div>
+      <div class="strength-label" id="strengthLabel">Password strength</div>
+      <div class="field-error" id="regPasswordErr">At least 6 characters required.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="regConfirm">Confirm Password</label>
+      <div class="input-wrap">
+        <input type="password" id="regConfirm" placeholder="Repeat password" />
+        <button type="button" class="toggle-pw" onclick="togglePw('regConfirm', this)">👁</button>
+      </div>
+      <div class="field-error" id="regConfirmErr">Passwords do not match.</div>
+    </div>
+
+    <button class="btn-submit" id="regBtn" onclick="handleRegister()">
+      <span id="regBtnText">Create Account</span>
+      <div class="spinner" id="regSpinner"></div>
+    </button>
+
+    <div class="switch-link">
+      Already have an account?
+      <button type="button" onclick="switchTab('login')">Login</button>
+    </div>
+
+    <a class="back-link" href="Food_System.Html">← Back to Shop</a>
+  </div>
+
+</div>
+
+<script src="login.js"></script>
+
+</body>
+</html>

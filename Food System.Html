@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickDelivery</title>
+  <link rel="stylesheet" href="food_system.css" />
+</head>
+<body>
+
+  <!-- Cart Overlay -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>🛒 Your Cart</h3>
+      <button class="close-cart" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">Your cart is empty.</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cartTotal">$0</span>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">Checkout →</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Header -->
+  <header>
+    <h1>QuickDelivery</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#products">Products</a>
+      <a href="#delivery">Track Delivery</a>
+      <button class="cart-btn" onclick="openCart()">
+        🛒 Cart <span class="badge" id="cartBadge">0</span>
+      </button>
+      <span id="authArea"></span>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>E-Commerce Delivery System</h2>
+    <p>Buy products and track your delivery easily.</p>
+    <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+  </section>
+
+  <!-- Products -->
+  <section class="products" id="products">
+    <h2>Featured Products</h2>
+    <div class="product-container">
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1000" alt="Phone">
+        <h3>Smartphone</h3>
+        <p class="price">$499</p>
+        <button onclick="addToCart(this, 'Smartphone', 499, 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000" alt="Headphone">
+        <h3>Wireless Headphones</h3>
+        <p class="price">$120</p>
+        <button onclick="addToCart(this, 'Wireless Headphones', 120, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000" alt="Watch">
+        <h3>Smart Watch</h3>
+        <p class="price">$199</p>
+        <button onclick="addToCart(this, 'Smart Watch', 199, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1000" alt="Laptop">
+        <h3>Laptop</h3>
+        <p class="price">$899</p>
+        <button onclick="addToCart(this, 'Laptop', 899, 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1607462109225-6b64ae2dd3cb?q=80&w=1000" alt="Camera">
+        <h3>Camera</h3>
+        <p class="price">$599</p>
+        <button onclick="addToCart(this, 'Camera', 599, 'https://images.unsplash.com/photo-1607462109225-6b64ae2dd3cb?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=1000" alt="Tablet">
+        <h3>Tablet</h3>
+        <p class="price">$299</p>
+        <button onclick="addToCart(this, 'Tablet', 299, 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?q=80&w=1000" alt="Airpods">
+        <h3>Airpods</h3>
+        <p class="price">$199</p>
+        <button onclick="addToCart(this, 'Airpods', 199, 'https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=1000" alt="Speaker">
+        <h3>Bluetooth Speaker</h3>
+        <p class="price">$149</p>
+        <button onclick="addToCart(this, 'Bluetooth Speaker', 149, 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=1000" alt="Apple Watch">
+        <h3>Apple Watch</h3>
+        <p class="price">$399</p>
+        <button onclick="addToCart(this, 'Apple Watch', 399, 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=1000" alt="GPU">
+        <h3>NVIDIA GPU</h3>
+        <p class="price">$899</p>
+        <button onclick="addToCart(this, 'NVIDIA GPU', 899, 'https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://tkcustomcomputer.com/assets/uploads/21facb81d64c80126834f91cf213af03.jpg" alt="Razer Mouse">
+        <h3>Razer Mouse</h3>
+        <p class="price">$89</p>
+        <button onclick="addToCart(this, 'Razer Mouse', 89, 'https://tkcustomcomputer.com/assets/uploads/21facb81d64c80126834f91cf213af03.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=1000" alt="Keyboard">
+        <h3>Keyboard</h3>
+        <p class="price">$300</p>
+        <button onclick="addToCart(this, 'Keyboard', 300, 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=1000" alt="Monitor">
+        <h3>MSI Optix Monitor</h3>
+        <p class="price">$300</p>
+        <button onclick="addToCart(this, 'MSI Optix Monitor', 300, 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=200')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://cdn.sandberg.world/products/images/lg/420-75_lg.jpg" alt="Power Bank">
+        <h3>Power Bank</h3>
+        <p class="price">$25</p>
+        <button onclick="addToCart(this, 'Power Bank', 25, 'https://cdn.sandberg.world/products/images/lg/420-75_lg.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=1000" alt="Charger">
+        <h3>Charger</h3>
+        <p class="price">$20</p>
+        <button onclick="addToCart(this, 'Charger', 20, 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=200')">Add to Cart</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Delivery -->
+  <section class="delivery-section" id="delivery">
+    <h2>Track Your Delivery</h2>
+    <div class="tracking-box">
+      <input type="text" id="trackingInput" placeholder="Enter Tracking Number">
+      <button onclick="trackOrder()">Track</button>
+    </div>
+    <div class="tracking-result" id="trackingResult"></div>
+  </section>
+
+  <footer>
+    <p>© 2026 QuickDelivery System | ITE Practicum Project</p>
+  </footer>
+
+  <script src="foodsystem.js"></script>
+</body>
+</html>
