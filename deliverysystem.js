@@ -134,6 +134,24 @@
         result.style.color = "green";
       }
     }
+    function showPayment() {
+    const paymentForm = document.getElementById("paymentForm");
+
+    if (paymentForm.style.display === "none") {
+        paymentForm.style.display = "block";
+    } else {
+        paymentForm.style.display = "none";
+    }
+}
+function selectPayment(method) {
+    document.getElementById("selectedPayment").innerHTML = `
+        <h3>${method} Selected</h3>
+        <input type="text" placeholder="Card Number"><br><br>
+        <input type="text" placeholder="MM/YY"><br><br>
+        <input type="text" placeholder="CVV"><br><br>
+        <button>Pay Now</button>
+    `;
+}
 
     
   // Init

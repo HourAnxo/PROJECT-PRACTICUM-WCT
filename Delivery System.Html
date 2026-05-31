@@ -32,13 +32,18 @@
   <!-- Toast -->
   <div class="toast" id="toast"></div>
 
-  <!-- Header -->
+  <!-- ✅ FIX 1: Header comes FIRST, before the marquee -->
   <header>
+    <div>
+      <img src="https://cdn.simpleicons.org/fastly" alt="QuickDelivery Logo" class="logo" />
+    </div>
     <h1>QuickDelivery</h1>
+    
     <nav>
       <a href="#">Home</a>
       <a href="#products">Products</a>
       <a href="#delivery">Track Delivery</a>
+      <a href="#payment">Payment</a>
       <button class="cart-btn" onclick="openCart()">
         🛒 Cart <span class="badge" id="cartBadge">0</span>
       </button>
@@ -50,8 +55,37 @@
   <section class="hero">
     <h2>E-Commerce Delivery System</h2>
     <p>Buy products and track your delivery easily.</p>
+
     <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
   </section>
+
+  <!-- ✅ FIX 1: Marquee moved to AFTER hero — correct page flow
+       ✅ FIX 3: Renamed class from "container" to "marquee-container" to avoid CSS conflicts -->
+  <div class="marquee-container">
+    <div class="wrapper">
+      <!-- Original set -->
+     <!-- Original set -->
+<div class="logo"><img src="https://cdn.simpleicons.org/apple"     alt="Apple"     /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/samsung"   alt="Samsung"   /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/sony"      alt="Sony"      /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/nvidia"    alt="NVIDIA"    /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/razer"     alt="Razer"     /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/intel"     alt="Intel"     /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/amd"       alt="AMD"       /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/lg"        alt="LG"        /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/asus"      alt="ASUS"      /></div>
+<!-- Duplicate set (required for seamless loop) -->
+<div class="logo"><img src="https://cdn.simpleicons.org/apple"     alt="Apple"     /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/samsung"   alt="Samsung"   /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/sony"      alt="Sony"      /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/nvidia"    alt="NVIDIA"    /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/razer"     alt="Razer"     /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/intel"     alt="Intel"     /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/amd"       alt="AMD"       /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/lg"        alt="LG"        /></div>
+<div class="logo"><img src="https://cdn.simpleicons.org/asus"      alt="ASUS"      /></div>
+    </div>
+  </div>
 
   <!-- Products -->
   <section class="products" id="products">
@@ -176,10 +210,38 @@
     <div class="tracking-result" id="trackingResult"></div>
   </section>
 
+<section class="payment-section" id="payment">
+    <h2>Payment Methods</h2>
+    <p>We accept all major payment methods.</p>
+
+    <div class="payment-methods">
+        <img src="https://cdn.simpleicons.org/visa" alt="Visa">
+        <img src="https://cdn.simpleicons.org/mastercard" alt="MasterCard">
+        <img src="https://cdn.simpleicons.org/paypal" alt="PayPal">
+        <img src="https://cdn.simpleicons.org/applepay" alt="Apple Pay">
+    </div>
+
+    <button class="pay-btn" onclick="showPayment()">
+        Proceed to Payment
+    </button>
+
+    <div id="paymentForm" style="display:none;">
+        <h3>Select Payment Method</h3>
+
+        <button onclick="selectPaymentMethod('Visa')">💳 Visa</button>
+        <button onclick="selectPaymentMethod('MasterCard')">💳 MasterCard</button>
+        <button onclick="selectPaymentMethod('PayPal')">🅿️ PayPal</button>
+        <button onclick="selectPaymentMethod('Apple Pay')">🍎 Apple Pay</button>
+    </div>
+    <p id="selectedPayment"></p>
+</section>
+
+
   <footer>
     <p>© 2026 QuickDelivery System | ITE Practicum Project</p>
   </footer>
 
   <script src="deliverysystem.js"></script>
+
 </body>
-</html>
+</html> <!-- ✅ FIX 2: Added missing </html> closing tag -->

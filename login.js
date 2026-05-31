@@ -67,99 +67,105 @@
     document.getElementById(txtId).style.display = loading ? 'none' : 'inline';
   }
 
-  function getUsers() {
-    return JSON.parse(localStorage.getItem('qd_users') || '[]');
-  }
-  function saveUsers(users) {
-    localStorage.setItem('qd_users', JSON.stringify(users));
-  }
-
+  
   // ── LOGIN ──
-  function handleLogin() {
-    clearAlerts();
-    const email    = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value;
+ async function handleLogin() {
 
-    let valid = true;
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('loginEmailErr', true); valid = false;
-    } else { setError('loginEmailErr', false); }
+  clearAlerts();
 
-    if (!password) {
-      setError('loginPasswordErr', true); valid = false;
-    } else { setError('loginPasswordErr', false); }
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
 
-    if (!valid) return;
-
-    setLoading('loginBtn', 'loginSpinner', 'loginBtnText', true);
-
-    setTimeout(() => {
-      setLoading('loginBtn', 'loginSpinner', 'loginBtnText', false);
-      const users = getUsers();
-      const user  = users.find(u => u.email === email && u.password === password);
-
-      if (!user) {
-        showAlert('loginError', 'Incorrect email or password.');
-        return;
-      }
-      localStorage.setItem('loggedInUser', user.firstName + ' ' + user.lastName);
-      showAlert('loginSuccess', `Welcome back, ${user.firstName}! Redirecting...`);
-      setTimeout(() => window.location.href = 'Food_System.Html', 1500);
-    }, 900);
+  if (!email || !password) {
+    showAlert('loginError', 'Please fill all fields');
+    return;
   }
 
-  // ── REGISTER ──
-  function handleRegister() {
-    clearAlerts();
-    const first    = document.getElementById('regFirst').value.trim();
-    const last     = document.getElementById('regLast').value.trim();
-    const email    = document.getElementById('regEmail').value.trim();
-    const password = document.getElementById('regPassword').value;
-    const confirm  = document.getElementById('regConfirm').value;
+  try {
 
-    let valid = true;
+    const response = await fetch('http://localhost:3000/login', {
 
-    if (!first)  { setError('regFirstErr', true);   valid = false; } else { setError('regFirstErr', false); }
-    if (!last)   { setError('regLastErr', true);    valid = false; } else { setError('regLastErr', false); }
+      method: 'POST',
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('regEmailErr', true); valid = false;
-    } else { setError('regEmailErr', false); }
+      headers: {
+        'Content-Type': 'application/json'
+      },
 
-    if (password.length < 6) {
-      setError('regPasswordErr', true); valid = false;
-    } else { setError('regPasswordErr', false); }
+      body: JSON.stringify({
+        email,
+        password
+      })
 
-    if (password !== confirm) {
-      setError('regConfirmErr', true); valid = false;
-    } else { setError('regConfirmErr', false); }
+    });
 
-    if (!valid) return;
+    const data = await response.json();
 
-    setLoading('regBtn', 'regSpinner', 'regBtnText', true);
+    if (data.success) {
 
-    setTimeout(() => {
-      setLoading('regBtn', 'regSpinner', 'regBtnText', false);
-      const users = getUsers();
+      localStorage.setItem(
+        'loggedInUser',
+        data.user.first_name
+      );
 
-      if (users.find(u => u.email === email)) {
-        showAlert('regError', 'An account with this email already exists.');
-        return;
-      }
+      showAlert('loginSuccess', 'Login successful');
 
-      users.push({ firstName: first, lastName: last, email, password });
-      saveUsers(users);
-
-      showAlert('regSuccess', `Account created! Switching to login...`);
       setTimeout(() => {
-        document.getElementById('loginEmail').value = email;
-        switchTab('login');
+        window.location.href = 'Food_System.Html';
       }, 1500);
-    }, 900);
+
+    } else {
+
+      showAlert('loginError', data.message);
+
+    }
+
+  } catch (error) {
+
+    showAlert('loginError', 'Cannot connect to server');
+
+    console.log(error);
+
   }
 
-  // ── Auto-fill email if coming back from register ──
-  window.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('tab') === 'register') switchTab('register');
-  });
+}
+
+ // REGISTER
+async function handleRegister() {
+
+  const firstname = document.getElementById('regFirst').value.trim();
+  const lastname = document.getElementById('regLast').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const confirm_password = document.getElementById('regConfirm').value;
+
+  if (!firstname || !lastname || !email || !password || !confirm_password) {
+    alert('Please fill all fields');
+    return;
+  }
+
+  if (password !== confirm_password) {
+    alert('Passwords do not match');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:3000/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstname, lastname, email, password })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert(data.message);
+    } else {
+      alert(data.message);
+    }
+
+  } catch (error) {
+    console.log(error);
+    alert('Cannot connect to server');
+  }
+}
+
